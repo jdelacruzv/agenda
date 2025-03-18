@@ -1,7 +1,7 @@
 import sqlite3
 
 
-class Diary:
+class Agenda:
     """ Class that performs basic queries to the phonebook database (works as the application model) """
     def __init__(self):
         self.db_filename = 'phonebook.db'
