@@ -1,17 +1,10 @@
-"""
-	Agenda que registra nombre, teléfono, fecha de nacimiento, correo electrónico y país de residencia
-	y los almacena en una base de datos.
-
-    Author: José De La Cruz
-    Created: 2020-04-01
-"""
 import tkinter as tk
 from tkinter import ttk, messagebox
 #import ttkthemes
 
 
 class GuiMain(tk.Tk):
-    """Class that works as the application view"""
+    """ Class that works as the application view """
     def __init__(self, main):
         super().__init__()
         # add theme to whole application
@@ -129,7 +122,7 @@ class GuiMain(tk.Tk):
 
 
     def view_contact(self):
-        """View the records obtained from the database"""
+        """ View the records obtained from the database """
         # get rows from table
         items = self.tv_table.get_children()
         # leave the table blank
@@ -145,7 +138,7 @@ class GuiMain(tk.Tk):
 
 
     def clean_text_fields(self):
-        """Clean text fields"""
+        """ Clean text fields """
         self.ety_name.delete(0, tk.END)
         self.ety_telephone.delete(0, tk.END)
         self.ety_birthdate.delete(0, tk.END)
@@ -156,7 +149,7 @@ class GuiMain(tk.Tk):
 
 
     def validate_contact(self):
-        """Validate that the text fields are not empty"""
+        """ Validate that the text fields are not empty """
         name = len(self.ety_name.get())
         telephone = len(self.ety_telephone.get())
         birthdate = len(self.ety_birthdate.get())
@@ -166,7 +159,7 @@ class GuiMain(tk.Tk):
 
 
     def add_contact(self):
-        """Add new contact to the database"""
+        """ Add new contact to the database """
         if self.validate_contact():
             name = self.ety_name.get()
             telephone = self.ety_telephone.get()
@@ -184,7 +177,7 @@ class GuiMain(tk.Tk):
 
 
     def open_edit_window(self):
-        """Open contact edit window"""
+        """ Open contact edit window """
         # get the focus of the row
         current_item = self.tv_table.focus()
         if current_item:
@@ -197,7 +190,7 @@ class GuiMain(tk.Tk):
 
 
     def delete_contact(self):
-        """Delete contact"""
+        """ Delete contact """
         # get the focus of the row
         current_item = self.tv_table.focus()
         if current_item:
@@ -216,25 +209,25 @@ class GuiMain(tk.Tk):
 
     @staticmethod
     def about_diary():
-        """Program description"""
+        """ Program description """
         msg = 'Realizado por José De La Cruz'
         messagebox.showinfo('Agenda', msg)
 
 
     def center_window(self, w, h):
-        """Center window"""
+        """ Center window """
         x = (self.winfo_screenwidth() - w) / 2
         y = (self.winfo_screenheight() - h) / 2
         self.geometry('%dx%d+%d+%d' % (w, h, x, y))
 
 
     def start_mainloop(self):
-        """Run the main window loop"""
+        """ Run the main window loop """
         self.mainloop()
 
 
 class GuiEdit(tk.Toplevel):
-    """Crea la ventana de editar registro"""
+    """ Crea la ventana de editar registro """
     def __init__(self, master, main):
         super().__init__()
         self.transient(master)  # make the window transient(transitorio)
@@ -284,7 +277,7 @@ class GuiEdit(tk.Toplevel):
 
     
     def update_contact(self, telephone, email, country, birthdate, name):
-        """Update contact"""
+        """ Update contact """
         self.main.update_contact(telephone, email, country, birthdate, name)
         self.master.view_contact()
         messagebox.showinfo('Info Agenda', 'El contacto fue actualizado')
@@ -292,7 +285,7 @@ class GuiEdit(tk.Toplevel):
 
     
     def center_window(self, w, h):
-        """Center window"""
+        """ Center window """
         x = (self.winfo_screenwidth() - w) / 2
         y = (self.winfo_screenheight() - h) / 2
         self.geometry('%dx%d+%d+%d' % (w, h, x, y))
