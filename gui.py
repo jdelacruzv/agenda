@@ -10,93 +10,83 @@ class GuiMain(tk.Tk):
         # add theme to whole application
         #self.style = ttkthemes.ThemedStyle()
         # self.style.theme_use('arc')  # arc, plastik, clearlooks, elegance
-
         self.title('Agenda')
         self.iconphoto(True, tk.PhotoImage(file='img/ico.png'))
         self.resizable(False, False)
         self.center_window(870, 455)   # 860, 490
         self.main = main
+        self.add_components()
+        self.view_contact()
 
+
+    def add_components(self):
+        """ Add components to the main window """
         # main frame
         self.frm_main = ttk.Frame(self, borderwidth=1)
         self.frm_main.pack(fill=tk.BOTH, expand=tk.YES)
-
         # top frame
         self.frm_top = ttk.Frame(self.frm_main)
-        self.frm_top.pack(side=tk.TOP, fill=tk.BOTH,
-                            expand=tk.YES, padx=10, pady=5)
-
-        # row 0
-        lbl_name = ttk.Label(self.frm_top, text='Nombre:',
-                            foreground='black', font=('Helvatica', 8, 'bold'))
+        self.frm_top.pack(side=tk.TOP, fill=tk.BOTH, expand=tk.YES, padx=10, pady=5)
+        # row 0: name
+        lbl_name = ttk.Label(self.frm_top, text='Nombre:', foreground='black', font=('Helvatica', 8, 'bold'))
         lbl_name.grid(row=0, column=0, sticky=tk.E, padx=5, pady=5)
         self.ety_name = ttk.Entry(self.frm_top, width=25)
         self.ety_name.grid(row=0, column=1, sticky=tk.EW, pady=5)
-
-        lbl_phone = ttk.Label(self.frm_top, text='Teléfono:',
-                            foreground='black', font=('Helvatica', 8, 'bold'))
+        # row 0: phone
+        lbl_phone = ttk.Label(self.frm_top, text='Teléfono:', foreground='black', font=('Helvatica', 8, 'bold'))
         lbl_phone.grid(row=0, column=2, sticky=tk.E, padx=5, pady=5)
         self.ety_telephone = ttk.Entry(self.frm_top, width=12)
         self.ety_telephone.grid(row=0, column=3, sticky=tk.EW, pady=5)
-
-        lbl_birth = ttk.Label(self.frm_top, text='Fecha de Nacimiento:',
-                            foreground='black', font=('Helvatica', 8, 'bold'))
+        # row 0: birthdate
+        lbl_birth = ttk.Label(self.frm_top, text='Fecha de Nacimiento:', foreground='black', font=('Helvatica', 8, 'bold'))
         lbl_birth.grid(row=0, column=4, sticky=tk.E, padx=5, pady=5)
         self.ety_birthdate = ttk.Entry(self.frm_top, width=10)
         self.ety_birthdate.grid(row=0, column=5, sticky=tk.EW, pady=5)
         self.ety_birthdate.insert(0, self.main.system_date())
-
+        # row 0: clear button
         self.img_clear = tk.PhotoImage(file='img/clear.png')
         bnt_clear = ttk.Button(self.frm_top, text='Limpiar', image=self.img_clear,
-                            compound=tk.LEFT, width=10, command=self.clean_text_fields)
+            compound=tk.LEFT, width=10, command=self.clean_text_fields)
         bnt_clear.grid(row=0, column=6, sticky=tk.E, padx=5, pady=5)
-
-        # row 1
-        lbl_email = ttk.Label(self.frm_top, text='E-mail:',
-                            foreground='black', font=('Helvatica', 8, 'bold'))
+        # row 1: email
+        lbl_email = ttk.Label(self.frm_top, text='E-mail:', foreground='black', font=('Helvatica', 8, 'bold'))
         lbl_email.grid(row=1, column=0, sticky=tk.E, padx=5)
         self.ety_email = ttk.Entry(self.frm_top, width=25)
         self.ety_email.grid(row=1, column=1, sticky=tk.EW)
-
-        lbl_country = ttk.Label(self.frm_top, text='País de Res:',
-                                foreground='black', font=('Helvatica', 8, 'bold'))
+        # row 1: country
+        lbl_country = ttk.Label(self.frm_top, text='País de Res:', foreground='black', font=('Helvatica', 8, 'bold'))
         lbl_country.grid(row=1, column=2, sticky=tk.E, padx=5)
         self.ety_country = ttk.Entry(self.frm_top, width=15)
         self.ety_country.grid(row=1, column=3, sticky=tk.EW)
-
+        # row 1: save button
         self.img_save = tk.PhotoImage(file='img/save.png')
         btn_save = ttk.Button(self.frm_top, text='Grabar', image=self.img_save,
-                            compound=tk.LEFT, width=10, command=self.add_contact)
+            compound=tk.LEFT, width=10, command=self.add_contact)
         btn_save.grid(row=1, column=4, sticky=tk.E, padx=5)
-
+        # row 1: edit button
         self.img_edit = tk.PhotoImage(file='img/edit.png')
         btn_edit = ttk.Button(self.frm_top, text='Editar', image=self.img_edit,
-                            compound=tk.LEFT, width=10, command=self.open_edit_window)
+            compound=tk.LEFT, width=10, command=self.open_edit_window)
         btn_edit.grid(row=1, column=5, sticky=tk.E)
-
+        # row 1: delete
         self.img_delete = tk.PhotoImage(file='img/delete.png')
         btn_delete = ttk.Button(self.frm_top, text='Borrar', image=self.img_delete,
-                                compound=tk.LEFT, width=10, command=self.delete_contact)
+            compound=tk.LEFT, width=10, command=self.delete_contact)
         btn_delete.grid(row=1, column=6, sticky=tk.E, padx=5)
-
-        # row 2
+        # row 2: about button
         self.img_about = tk.PhotoImage(file='img/about.png')
         btn_about = ttk.Button(self.frm_top, text='Acerca de', image=self.img_about,
-                            compound=tk.LEFT, width=10, command=self.about_diary)
+            compound=tk.LEFT, width=10, command=self.about_diary)
         btn_about.grid(row=2, column=6, sticky=tk.NS, pady=5)
-
         # bottom frame
         self.frm_bottom = ttk.Frame(self.frm_main)
         self.frm_bottom.pack(side=tk.TOP, fill=tk.BOTH, expand=tk.YES, padx=10)
-
         # treeview style
         tv_style = ttk.Style()
         tv_style.configure('Treeview', foreground='blue')
         tv_style.configure('Treeview.Heading', foreground='black', font=('Helvatica', 8, 'bold'))
-
         # treeview widget
-        self.tv_table = ttk.Treeview(
-            self.frm_bottom, height=15, column=('1', '2', '3', '4'))
+        self.tv_table = ttk.Treeview(self.frm_bottom, height=15, column=('1', '2', '3', '4'))
         self.tv_table.grid(row=2, column=0, columnspan=7)
         self.tv_table.heading('#0', text='Nombre', anchor=tk.CENTER)
         self.tv_table.column('#0', width=180)
@@ -108,17 +98,11 @@ class GuiMain(tk.Tk):
         self.tv_table.column('#3', width=280)
         self.tv_table.heading('#4', text='País de Res.', anchor=tk.CENTER)
         self.tv_table.column('#4', width=135)
-
         # scroll bar widget
-        self.sb_vertical = ttk.Scrollbar(
-            self.frm_bottom, orient=tk.VERTICAL, command=self.tv_table.yview)
+        self.sb_vertical = ttk.Scrollbar(self.frm_bottom, orient=tk.VERTICAL, command=self.tv_table.yview)
         self.sb_vertical.grid(row=2, column=7, sticky=tk.NS)
-
         # add scroll bar to treeview
         self.tv_table.configure(yscrollcommand=self.sb_vertical.set)
-
-        # call view_contact method
-        self.view_contact()
 
 
     def view_contact(self):
