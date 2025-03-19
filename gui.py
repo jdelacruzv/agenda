@@ -219,39 +219,72 @@ class GuiEdit(tk.Toplevel):
         self.title('Actualizar contacto')
         self.resizable(False, False)
         self.main = main
-        self.center_window(385, 155)  # 330, 145
+        self.add_components()
+        self.center_window(385, 167)  
         self.focus_set()
 
+
+    def add_components(self):
         # get text and values from the treeview fields of the GuiMain class
         name = self.master.tv_table.item(self.master.tv_table.selection())['text']
         telephone = self.master.tv_table.item(self.master.tv_table.selection())['values'][0]
         birthdate = self.master.tv_table.item(self.master.tv_table.selection())['values'][1]
         email = self.master.tv_table.item(self.master.tv_table.selection())['values'][2]
         country = self.master.tv_table.item(self.master.tv_table.selection())['values'][3]
-
         # create gui
-        tk.Label(self, text='Nombre:').grid(row=0, column=0, sticky=tk.E)
-        tk.Entry(self, width=35, textvariable=tk.StringVar(
-            self, value=name), fg='red', state='readonly').grid(row=0, column=1)
-
-        tk.Label(self, text='Fecha de Nac:').grid(row=1, column=0, sticky=tk.E)
-        self.ety_birthdate = tk.Entry(self, width=35, textvariable=tk.StringVar(
-            self, value=birthdate), fg='red', state='readonly')
-        self.ety_birthdate.grid(row=1, column=1)
-
-        tk.Label(self, text='Teléfono:').grid(row=2, column=0, sticky=tk.E)
-        self.ety_telephone = tk.Entry(self, width=35, textvariable=tk.StringVar(self, value=telephone))
+        tk.Label(
+            self, 
+            text='Nombre:'
+        ).grid(row=0, column=0, sticky=tk.E)
+        tk.Entry(
+            self, 
+            width=35, 
+            textvariable=tk.StringVar(self, value=name), 
+            fg='red', 
+            state='readonly'
+        ).grid(row=0, column=1)
+        tk.Label(
+            self, 
+            text='Fecha de Nac:'
+        ).grid(row=1, column=0, sticky=tk.E)
+        self.ety_birthdate = tk.Entry(
+            self, 
+            width=35, 
+            textvariable=tk.StringVar(self, value=birthdate), 
+            fg='red', 
+            state='readonly'
+        ).grid(row=1, column=1)
+        tk.Label(
+            self, 
+            text='Teléfono:'
+        ).grid(row=2, column=0, sticky=tk.E)
+        self.ety_telephone = tk.Entry(
+            self, 
+            width=35, 
+            textvariable=tk.StringVar(self, value=telephone)
+        )
         self.ety_telephone.grid(row=2, column=1)
         self.ety_telephone.focus()
-
-        tk.Label(self, text='E-mail:').grid(row=3, column=0, sticky=tk.E)
-        self.ety_email = tk.Entry(self, width=35, textvariable=tk.StringVar(self, value=email))
+        tk.Label(
+            self, 
+            text='E-mail:'
+        ).grid(row=3, column=0, sticky=tk.E)
+        self.ety_email = tk.Entry(
+            self, 
+            width=35, 
+            textvariable=tk.StringVar(self, value=email)
+        )
         self.ety_email.grid(row=3, column=1)
-
-        tk.Label(self, text='País de Res:').grid(row=4, column=0, sticky=tk.E)
-        self.ety_country = tk.Entry(self, width=35, textvariable=tk.StringVar(self, value=country))
+        tk.Label(
+            self, 
+            text='País de Res:'
+        ).grid(row=4, column=0, sticky=tk.E)
+        self.ety_country = tk.Entry(
+            self, 
+            width=35, 
+            textvariable=tk.StringVar(self, value=country)
+        )
         self.ety_country.grid(row=4, column=1)
-
         # update record button
         self.img_update = tk.PhotoImage(file='img/update.png')
         self.btn_update = ttk.Button(self, text='Actualizar', image=self.img_update, compound='left',
