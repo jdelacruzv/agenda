@@ -16,10 +16,10 @@ class Agenda:
         return query_result
 
 
-    def create_contact(self, name, telephone, birthdate, email, country):
+    def create_contact(self, name, telephone, birthdate, email, city):
         """ Save contacts """
         query = 'INSERT INTO contacts VALUES(?, ?, ?, ?, ?)'
-        parameters = (name, telephone, birthdate, email, country)
+        parameters = (name, telephone, birthdate, email, city)
         self.execute_db_query(query, parameters)
         self.read_contact()
 
@@ -30,10 +30,10 @@ class Agenda:
         return self.execute_db_query(query)
 
 
-    def update_contact(self, telephone, email, country, birthdate, name):
+    def update_contact(self, telephone, email, city, birthdate, name):
         """ Update contact """
-        query = 'UPDATE contacts SET telephone=?, email=?, country=? WHERE birthdate=? AND name=?'
-        parameters = (telephone, email, country, birthdate, name)
+        query = 'UPDATE contacts SET telephone=?, email=?, city=? WHERE birthdate=? AND name=?'
+        parameters = (telephone, email, city, birthdate, name)
         self.execute_db_query(query, parameters)
         self.read_contact()
 
