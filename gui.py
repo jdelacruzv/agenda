@@ -13,7 +13,7 @@ class GuiMain(tk.Tk):
         self.title('Agenda')
         self.iconphoto(True, tk.PhotoImage(file='img/ico.png'))
         self.resizable(False, False)
-        self.center_window(870, 455)   # 860, 490
+        self.center_window(825, 455)   # 860, 490
         self.main = main
         self.add_components()
         self.view_contact()
@@ -53,11 +53,11 @@ class GuiMain(tk.Tk):
         lbl_email.grid(row=1, column=0, sticky=tk.E, padx=5)
         self.ety_email = ttk.Entry(self.frm_top, width=25)
         self.ety_email.grid(row=1, column=1, sticky=tk.EW)
-        # row 1: country
-        lbl_country = ttk.Label(self.frm_top, text='País de Res:', foreground='black', font=('Helvatica', 8, 'bold'))
-        lbl_country.grid(row=1, column=2, sticky=tk.E, padx=5)
-        self.ety_country = ttk.Entry(self.frm_top, width=15)
-        self.ety_country.grid(row=1, column=3, sticky=tk.EW)
+        # row 1: city
+        lbl_city = ttk.Label(self.frm_top, text='Ciudad:', foreground='black', font=('Helvatica', 8, 'bold'))
+        lbl_city.grid(row=1, column=2, sticky=tk.E, padx=5)
+        self.ety_city = ttk.Entry(self.frm_top, width=15)
+        self.ety_city.grid(row=1, column=3, sticky=tk.EW)
         # row 1: save button
         self.img_save = tk.PhotoImage(file='img/save.png')
         btn_save = ttk.Button(self.frm_top, text='Grabar', image=self.img_save,
@@ -93,10 +93,10 @@ class GuiMain(tk.Tk):
         self.tv_table.heading('#1', text='Teléfono', anchor=tk.CENTER)
         self.tv_table.column("#1", width=120)
         self.tv_table.heading('#2', text='Fecha de Nac.', anchor=tk.CENTER)
-        self.tv_table.column('#2', width=115)
+        self.tv_table.column('#2', width=110)
         self.tv_table.heading('#3', text='E-mail', anchor=tk.CENTER)
-        self.tv_table.column('#3', width=280)
-        self.tv_table.heading('#4', text='País de Res.', anchor=tk.CENTER)
+        self.tv_table.column('#3', width=240)
+        self.tv_table.heading('#4', text='Ciudad', anchor=tk.CENTER)
         self.tv_table.column('#4', width=135)
         # scroll bar widget
         self.sb_vertical = ttk.Scrollbar(self.frm_bottom, orient=tk.VERTICAL, command=self.tv_table.yview)
@@ -128,7 +128,7 @@ class GuiMain(tk.Tk):
         self.ety_birthdate.delete(0, tk.END)
         self.ety_birthdate.insert(0, self.main.system_date())
         self.ety_email.delete(0, tk.END)
-        self.ety_country.delete(0, tk.END)
+        self.ety_city.delete(0, tk.END)
         self.view_contact()
 
 
@@ -138,8 +138,8 @@ class GuiMain(tk.Tk):
         telephone = len(self.ety_telephone.get())
         birthdate = len(self.ety_birthdate.get())
         email = len(self.ety_email.get())
-        country = len(self.ety_country.get())
-        return (name != 0) and (telephone != 0) and (birthdate != 0) and (email != 0) and (country != 0)
+        city = len(self.ety_city.get())
+        return (name != 0) and (telephone != 0) and (birthdate != 0) and (email != 0) and (city != 0)
 
 
     def add_contact(self):
@@ -149,9 +149,9 @@ class GuiMain(tk.Tk):
             telephone = self.ety_telephone.get()
             birthdate = self.ety_birthdate.get()
             email = self.ety_email.get()
-            country = self.ety_country.get()
+            city = self.ety_city.get()
             self.main.create_contact(
-                name, telephone, birthdate, email, country)
+                name, telephone, birthdate, email, city)
             self.view_contact()
             self.clean_text_fields()
             messagebox.showinfo('Information', 'El contacto fue creado')
@@ -194,7 +194,7 @@ class GuiMain(tk.Tk):
     @staticmethod
     def about_diary():
         """ Program description """
-        msg = 'Realizado por José De La Cruz'
+        msg = 'Desarrollado por José De La Cruz'
         messagebox.showinfo('Agenda', msg)
 
 
@@ -230,7 +230,7 @@ class GuiEdit(tk.Toplevel):
         telephone = self.master.tv_table.item(self.master.tv_table.selection())['values'][0]
         birthdate = self.master.tv_table.item(self.master.tv_table.selection())['values'][1]
         email = self.master.tv_table.item(self.master.tv_table.selection())['values'][2]
-        country = self.master.tv_table.item(self.master.tv_table.selection())['values'][3]
+        city = self.master.tv_table.item(self.master.tv_table.selection())['values'][3]
         # create gui
         tk.Label(
             self, 
@@ -277,25 +277,25 @@ class GuiEdit(tk.Toplevel):
         self.ety_email.grid(row=3, column=1)
         tk.Label(
             self, 
-            text='País de Res:'
+            text='Ciudad:'
         ).grid(row=4, column=0, sticky=tk.E)
-        self.ety_country = tk.Entry(
+        self.ety_city = tk.Entry(
             self, 
             width=35, 
-            textvariable=tk.StringVar(self, value=country)
+            textvariable=tk.StringVar(self, value=city)
         )
-        self.ety_country.grid(row=4, column=1)
+        self.ety_city.grid(row=4, column=1)
         # update record button
         self.img_update = tk.PhotoImage(file='img/update.png')
         self.btn_update = ttk.Button(self, text='Actualizar', image=self.img_update, compound='left',
             command=lambda: self.update_contact(self.ety_telephone.get(), self.ety_email.get(), 
-            self.ety_country.get(), birthdate, name))
+            self.ety_city.get(), birthdate, name))
         self.btn_update.grid(row=5, column=1, sticky=tk.E, pady=5)
 
     
-    def update_contact(self, telephone, email, country, birthdate, name):
+    def update_contact(self, telephone, email, city, birthdate, name):
         """ Update contact """
-        self.main.update_contact(telephone, email, country, birthdate, name)
+        self.main.update_contact(telephone, email, city, birthdate, name)
         self.master.view_contact()
         messagebox.showinfo('Info Agenda', 'El contacto fue actualizado')
         self.destroy()
